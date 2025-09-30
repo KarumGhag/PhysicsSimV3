@@ -12,6 +12,8 @@ public class Game
         Simulation currentSim = new ParticleSim(this);
         Raylib.InitWindow(Global.WIDTH, Global.HEIGHT, Global.GAME_NAME);
 
+        Raylib.SetTargetFPS(120);
+
         while (!Raylib.WindowShouldClose())
         {
             Raylib.BeginDrawing();
