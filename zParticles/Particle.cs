@@ -14,13 +14,17 @@ public class Particle
     public int radius;
     public Color colour;
 
-    public Particle(int radius, Vector2 startPos, Vector2 startVelocity)
+    public Particle(int radius, Vector2 startPos, Vector2 startVelocity, List<Particle> particles)
     {
         position = startPos;
         oldPosition = position - startVelocity;
 
         velocity = startVelocity;
         this.radius = radius;
+
+        colour = Color.Red;
+
+        particles.Add(this);
 
     }
 

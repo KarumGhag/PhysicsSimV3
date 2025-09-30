@@ -20,3 +20,4 @@ c:\Users\karum\Desktop\0Vscode\c#\RaylibCS\PhysicsSimV3\obj\Debug\net9.0\refint\
 c:\Users\karum\Desktop\0Vscode\c#\RaylibCS\PhysicsSimV3\obj\Debug\net9.0\physicssimv3.pdb
 c:\Users\karum\Desktop\0Vscode\c#\RaylibCS\PhysicsSimV3\obj\Debug\net9.0\physicssimv3.genruntimeconfig.cache
 c:\Users\karum\Desktop\0Vscode\c#\RaylibCS\PhysicsSimV3\obj\Debug\net9.0\ref\physicssimv3.dll
+c:\Users\karum\Desktop\0Vscode\c#\RaylibCS\PhysicsSimV3\obj\Debug\net9.0\physicssimv3.sourcelink.json
