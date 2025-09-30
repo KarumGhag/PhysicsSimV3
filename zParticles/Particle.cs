@@ -7,6 +7,8 @@ namespace ParticleClass;
 public class Particle
 {
     public static float gravity = 1750f;
+    public static float friction = 0.9999f;
+    public static float bounceLoss = 0.9998f;
     public Vector2 position;
     public Vector2 oldPosition;
     public Vector2 velocity;
@@ -32,7 +34,37 @@ public class Particle
     {
         velocity = position - oldPosition;
         oldPosition = position;
-        position += velocity * 0.9999f;
+        position += velocity * friction;
         position.Y += gravity * deltaTime * deltaTime;
+
+        Bounce();
+    }
+
+    public void Bounce()
+    {
+        if (position.X > Global.WIDTH)
+        {
+            position.X = Global.WIDTH;
+            oldPosition.X = (velocity.X + position.X) * bounceLoss;
+        }
+
+        else if (position.X < 0)
+        {
+            position.X = 0;
+            oldPosition.X = (velocity.X + position.X) * bounceLoss;
+        }
+
+
+        if (position.Y > Global.HEIGHT)
+            {
+                position.Y = Global.HEIGHT;
+                oldPosition.Y = (velocity.Y + position.Y) * bounceLoss;
+            }
+
+            else if (position.Y < 0)
+            {
+                position.Y = 0;
+                oldPosition.Y = (velocity.Y * bounceLoss) * bounceLoss;
+            }
     }
 }
