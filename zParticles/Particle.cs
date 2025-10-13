@@ -28,7 +28,7 @@ public class Particle
         velocity = startVelocity;
         this.radius = radius;
 
-        colour = Color.Red;
+        colour = Global.HsvToRgb(new Random().Next(0, 360), new Random().Next(0, 255));
 
 
         particles.Add(this);

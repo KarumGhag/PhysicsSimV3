@@ -22,26 +22,29 @@ public class CircleCollider
 
     public void Collide(CellSystem cellSystem)
     {
-        position = particle.position;
-
-        gridX = Math.Clamp((int)Math.Floor(position.X / CellSystem.cellSize), 0, CellSystem.cols - 1);
-        gridY = Math.Clamp((int)Math.Floor(position.Y / CellSystem.cellSize), 0, CellSystem.rows - 1);
-
-        cellSystem.grid[gridX, gridY].particles.Add(particle);
-        cellSystem.grid[gridX, gridY].isEmpty = false;
-
-        potentialCollisions = cellSystem.GetNeighbourCollisions(gridX, gridY);
-
-        foreach(Particle particle in potentialCollisions)
+        int iterations = 1;
+        for (int i = 0; i < iterations; i++)
         {
-            if (particle == this.particle) continue;
-            if (this.particle.radius + particle.radius > Vector2.Distance(position, particle.position))
+            position = particle.position;
+
+            gridX = Math.Clamp((int)Math.Floor(position.X / CellSystem.cellSize), 0, CellSystem.cols - 1);
+            gridY = Math.Clamp((int)Math.Floor(position.Y / CellSystem.cellSize), 0, CellSystem.rows - 1);
+
+            cellSystem.grid[gridX, gridY].particles.Add(particle);
+            cellSystem.grid[gridX, gridY].isEmpty = false;
+
+            potentialCollisions = cellSystem.GetNeighbourCollisions(gridX, gridY);
+
+            foreach (Particle particle in potentialCollisions)
             {
-                this.particle.oldPosition = this.particle.position;
-                particle.oldPosition = particle.position;              
+                if (particle == this.particle) continue;
+                if (this.particle.radius + particle.radius > Vector2.Distance(position, particle.position) - 10)
+                {
+                    this.particle.oldPosition = this.particle.position;
+                    particle.oldPosition = particle.position;
+                }
             }
         }
-
     }
 }
 
