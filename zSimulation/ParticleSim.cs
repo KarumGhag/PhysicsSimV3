@@ -5,6 +5,7 @@ using SimulationClass;
 using System.Security.Cryptography;
 using System.Numerics;
 using GlobalInfo;
+using CollisionSystem;
 
 namespace ParticleSimulation;
 
@@ -12,11 +13,14 @@ public class ParticleSim : Simulation
 {
     public ParticleSim(Game game) : base(game)
     {
-        for (int i = 0; i < 10; i++) new Particle(10, new Vector2(Global.WIDTH / 2, Global.HEIGHT / 2), new Vector2(10, 0), particles);
+        Global.currentSimulation = this;
+        Global.cellSystem = new CellSystem();
+
+        int numParticles = 100;
+        for (int i = 0; i < numParticles; i++) new Particle(10, Global.RandomVec(0, Global.WIDTH, 0, Global.HEIGHT), Global.RandomVec(-50, 50, -10, 10), particles);
     }
 
     public static List<Particle> particles = new List<Particle>();
-
 
     public override void Update(float deltaTime)
     {

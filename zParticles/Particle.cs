@@ -1,6 +1,8 @@
 using System.Numerics;
 using Raylib_cs;
 using GlobalInfo;
+using SimulationClass;
+using CollisionSystem;
 
 namespace ParticleClass;
 
@@ -16,6 +18,8 @@ public class Particle
     public int radius;
     public Color colour;
 
+    public CircleCollider collider;
+
     public Particle(int radius, Vector2 startPos, Vector2 startVelocity, List<Particle> particles)
     {
         position = startPos;
@@ -26,16 +30,22 @@ public class Particle
 
         colour = Color.Red;
 
+
         particles.Add(this);
 
+        collider = new CircleCollider(this);
     }
 
     public void Update(float deltaTime)
     {
+        collider.Collide(Global.cellSystem);
+
         velocity = position - oldPosition;
         oldPosition = position;
         position += velocity * friction;
         position.Y += gravity * deltaTime * deltaTime;
+
+        collider.Collide(Global.cellSystem);
 
         Bounce();
     }

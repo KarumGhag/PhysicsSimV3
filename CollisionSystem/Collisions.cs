@@ -1,0 +1,110 @@
+using System.Numerics;
+using ParticleClass;
+using GlobalInfo;
+using ParticleSimulation;
+using System.Data;
+
+namespace CollisionSystem;
+
+public class CircleCollider
+{
+    Particle particle;
+    Vector2 position;
+    int gridX;
+    int gridY;
+
+    List<Particle> potentialCollisions = new List<Particle>();
+    public CircleCollider(Particle particle)
+    {
+        this.particle = particle;
+        position = this.particle.position;
+    }
+
+    public void Collide(CellSystem cellSystem)
+    {
+        position = particle.position;
+
+        gridX = Math.Clamp((int)Math.Floor(position.X / CellSystem.cellSize), 0, CellSystem.cols - 1);
+        gridY = Math.Clamp((int)Math.Floor(position.Y / CellSystem.cellSize), 0, CellSystem.rows - 1);
+
+        cellSystem.grid[gridX, gridY].particles.Add(particle);
+        cellSystem.grid[gridX, gridY].isEmpty = false;
+
+        potentialCollisions = cellSystem.GetNeighbourCollisions(gridX, gridY);
+
+        foreach(Particle particle in potentialCollisions)
+        {
+            if (particle == this.particle) continue;
+            if (this.particle.radius + particle.radius > Vector2.Distance(position, particle.position))
+            {
+                this.particle.oldPosition = this.particle.position;
+                particle.oldPosition = particle.position;              
+            }
+        }
+
+    }
+}
+
+
+public class CellSystem
+{
+    public static int cellSize = 10;
+    public static int cols = (int)Math.Ceiling((float)Global.WIDTH / cellSize);
+    public static int rows = (int)Math.Ceiling((float)Global.HEIGHT / cellSize);
+
+
+    public Cell[,] grid;
+
+    public CellSystem()
+    {
+        grid = new Cell[cols, rows];
+
+        for (int x = 0; x < cols; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                grid[x, y] = new Cell();
+            }
+        }
+    }
+
+    public void ClearCells()
+    {
+        for (int x = 0; x < cols; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                grid[x, y].particles.Clear();
+                grid[x, y].isEmpty = true;
+            }
+        }
+    }
+
+    public List<Particle> GetNeighbourCollisions(int x, int y)
+    {
+        List<Particle> particles = new List<Particle>();
+
+        // This grid spot
+        if (IsInBounds(x, y)) particles.AddRange(grid[x, y].particles);           // This grid spot
+        if (IsInBounds(x, y + 1)) particles.AddRange(grid[x, y + 1].particles);   // Spot straight up
+        if (IsInBounds(x + 1, y + 1)) particles.AddRange(grid[x + 1, y + 1].particles); // Spot diagonally up
+        if (IsInBounds(x + 1, y)) particles.AddRange(grid[x + 1, y].particles);   // Spot infront
+        if (IsInBounds(x + 1, y - 1)) particles.AddRange(grid[x + 1, y - 1].particles); // Spot diagonally down
+        if (IsInBounds(x, y - 1)) particles.AddRange(grid[x, y - 1].particles);   // Spot below
+
+        return particles;
+    }
+
+    private bool IsInBounds(int x, int y)
+    {
+        return x >= 0 && x < cols && y >= 0 && y < rows;
+    }
+
+
+}
+
+public class Cell
+{
+    public List<Particle> particles = new List<Particle>();
+    public bool isEmpty;
+}
