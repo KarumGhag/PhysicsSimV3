@@ -62,7 +62,7 @@ public class CircleCollider
 
 public class CellSystem
 {
-    public static int cellSize = 30;
+    public static int cellSize = 20;
     public static int cols = (int)Math.Ceiling((float)Global.WIDTH / cellSize);
     public static int rows = (int)Math.Ceiling((float)Global.HEIGHT / cellSize);
 
@@ -98,13 +98,17 @@ public class CellSystem
     {
         List<Particle> particles = new List<Particle>();
 
-        // This grid spot
-        if (IsInBounds(x, y)) particles.AddRange(grid[x, y].particles);           // This grid spot
-        if (IsInBounds(x, y + 1)) particles.AddRange(grid[x, y + 1].particles);   // Spot straight up
-        if (IsInBounds(x + 1, y + 1)) particles.AddRange(grid[x + 1, y + 1].particles); // Spot diagonally up
-        if (IsInBounds(x + 1, y)) particles.AddRange(grid[x + 1, y].particles);   // Spot infront
-        if (IsInBounds(x + 1, y - 1)) particles.AddRange(grid[x + 1, y - 1].particles); // Spot diagonally down
-        if (IsInBounds(x, y - 1)) particles.AddRange(grid[x, y - 1].particles);   // Spot below
+        // Check current cell and all 8 surrounding cells
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                if (IsInBounds(x + i, y + j))
+                {
+                    particles.AddRange(grid[x + i, y + j].particles);
+                }
+            }
+        }
 
         return particles;
     }

@@ -38,43 +38,42 @@ public class Particle
 
     public void Update(float deltaTime)
     {
-        collider.Collide(Global.cellSystem);
 
         velocity = position - oldPosition;
         oldPosition = position;
         position += velocity * friction;
         position.Y += gravity * deltaTime * deltaTime;
 
-        collider.Collide(Global.cellSystem);
+        for (int i = 0;  i < 8; i++) collider.Collide(Global.cellSystem);
 
         Bounce();
     }
 
     public void Bounce()
     {
-        if (position.X > Global.WIDTH)
+        if (position.X > Global.WIDTH - radius)
         {
-            position.X = Global.WIDTH;
+            position.X = Global.WIDTH - radius;
             oldPosition.X = (velocity.X + position.X) * bounceLoss;
         }
 
-        else if (position.X < 0)
+        else if (position.X < 0 - radius)
         {
-            position.X = 0;
+            position.X = 0 - radius;
             oldPosition.X = (velocity.X + position.X) * bounceLoss;
         }
 
 
-        if (position.Y > Global.HEIGHT)
+        if (position.Y > Global.HEIGHT - radius)
             {
-                position.Y = Global.HEIGHT;
+                position.Y = Global.HEIGHT - radius;
                 oldPosition.Y = (velocity.Y + position.Y) * bounceLoss;
             }
 
-            else if (position.Y < 0)
-            {
-                position.Y = 0;
-                oldPosition.Y = (velocity.Y * bounceLoss) * bounceLoss;
-            }
+        else if (position.Y < 0)
+        {
+            position.Y = 0;
+            oldPosition.Y = (velocity.Y * bounceLoss) * bounceLoss;
+        }
     }
 }
