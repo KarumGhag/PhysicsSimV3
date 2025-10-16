@@ -6,6 +6,8 @@ using System.Security.Cryptography;
 using System.Numerics;
 using GlobalInfo;
 using CollisionSystem;
+using System.Reflection.Metadata;
+using System.Security;
 
 namespace ParticleSimulation;
 
@@ -16,8 +18,9 @@ public class ParticleSim : Simulation
         Global.currentSimulation = this;
         Global.cellSystem = new CellSystem();
 
-        int numParticles = 100;
-        for (int i = 0; i < numParticles; i++) new Particle(10, Global.RandomVec(0, Global.WIDTH, 0, Global.HEIGHT), Global.RandomVec(-50, 50, -10, 10), particles);
+        int numParticles = 50;
+        for (int i = 0; i < numParticles; i++) new Particle(30, Global.RandomVec(0, Global.WIDTH, 0, Global.HEIGHT), Global.RandomVec(-10, 10, -10, 10), particles);
+
     }
 
     public static List<Particle> particles = new List<Particle>();

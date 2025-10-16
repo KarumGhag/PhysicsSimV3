@@ -3,6 +3,7 @@ using ParticleClass;
 using GlobalInfo;
 using ParticleSimulation;
 using System.Data;
+using System.Reflection.Metadata;
 
 namespace CollisionSystem;
 
@@ -35,13 +36,23 @@ public class CircleCollider
 
             potentialCollisions = cellSystem.GetNeighbourCollisions(gridX, gridY);
 
-            foreach (Particle particle in potentialCollisions)
+            foreach (Particle otherParticle in potentialCollisions)
             {
-                if (particle == this.particle) continue;
-                if (this.particle.radius + particle.radius > Vector2.Distance(position, particle.position) - 10)
+                if (otherParticle == particle) continue;
+                if (particle.radius + otherParticle.radius > Vector2.Distance(position, otherParticle.position))
                 {
-                    this.particle.oldPosition = this.particle.position;
-                    particle.oldPosition = particle.position;
+
+                    float distance = Global.GetDistance(particle.position, otherParticle.position);
+                    float overlap = 0.5f * (distance - particle.radius - otherParticle.radius);
+
+                    float bounceLoss = 0.1f;
+
+                    particle.position.X -= overlap * (particle.position.X - otherParticle.position.X) / distance * bounceLoss;
+                    particle.position.Y -= overlap * (particle.position.Y - otherParticle.position.Y) / distance * bounceLoss;
+
+                    otherParticle.position.X += overlap * (particle.position.X - otherParticle.position.X) / distance * bounceLoss;
+                    otherParticle.position.Y += overlap * (particle.position.Y - otherParticle.position.Y) / distance * bounceLoss;
+
                 }
             }
         }
@@ -51,7 +62,7 @@ public class CircleCollider
 
 public class CellSystem
 {
-    public static int cellSize = 10;
+    public static int cellSize = 30;
     public static int cols = (int)Math.Ceiling((float)Global.WIDTH / cellSize);
     public static int rows = (int)Math.Ceiling((float)Global.HEIGHT / cellSize);
 
