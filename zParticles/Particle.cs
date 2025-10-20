@@ -9,8 +9,8 @@ namespace ParticleClass;
 public class Particle
 {
     public static float gravity = 1750f;
-    public static float friction = 0.9999f;
-    public static float bounceLoss = 0.99999f;
+    public static float friction = 0.999f;
+    public static float bounceLoss = 0.999f;
     public Vector2 position;
     public Vector2 oldPosition;
     public Vector2 velocity;

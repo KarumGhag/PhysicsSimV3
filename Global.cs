@@ -2,12 +2,12 @@ using System.Numerics;
 using Raylib_cs;
 using SimulationClass;
 using CollisionSystem;
-using System.ComponentModel.DataAnnotations;
 
 namespace GlobalInfo;
 
 public static class Global
 {
+    // git on zed test
     public static int WIDTH = 1920;
     public static int HEIGHT = 1080;
     public static string GAME_NAME = "Game";

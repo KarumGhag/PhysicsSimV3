@@ -19,9 +19,9 @@ public class Game
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Global.BACKGROUND_COL);
 
-            Raylib.DrawText("FPS: " + Convert.ToString(Math.Round(1 / Raylib.GetFrameTime(), 0)), 10, 10, 25, Color.White);
 
             if (currentSim != null) currentSim.Update(Raylib.GetFrameTime());
+            Raylib.DrawText("FPS: " + Convert.ToString(Math.Round(1 / Raylib.GetFrameTime(), 0)), 10, 10, 25, Color.White);
 
             Raylib.EndDrawing();
         }

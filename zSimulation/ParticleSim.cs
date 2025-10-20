@@ -8,6 +8,7 @@ using GlobalInfo;
 using CollisionSystem;
 using System.Reflection.Metadata;
 using System.Security;
+using System.Security.Principal;
 
 namespace ParticleSimulation;
 
@@ -18,20 +19,30 @@ public class ParticleSim : Simulation
         Global.currentSimulation = this;
         Global.cellSystem = new CellSystem();
 
-        int numParticles = 5;
+        int numParticles = 0;
         for (int i = 0; i < numParticles; i++) new Particle(10, Global.RandomVec(0, Global.WIDTH, 0, Global.HEIGHT), Global.RandomVec(-10, 10, -10, 10), particles);
 
     }
 
     public static List<Particle> particles = new List<Particle>();
 
+    public int framesBetweenAdding = 7;
+    public int currentFrame;
     public override void Update(float deltaTime)
     {
+        currentFrame++;
+        if (currentFrame % framesBetweenAdding == 0)
+        {
+            int radius = 15;
+            new Particle(radius, new Vector2(5, 5), new Vector2(7, 0), particles);
+        }
         Global.cellSystem.ClearCells();
         foreach (Particle particle in particles)
         {
             particle.Update(deltaTime);
             Raylib.DrawCircleV(particle.position, particle.radius, particle.colour);
         }
+
+        Raylib.DrawText("Particles: " + Convert.ToString(particles.Count()), 10, 30, 25, Color.White);
     }
 }
