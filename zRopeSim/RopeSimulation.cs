@@ -19,11 +19,19 @@ public class RopeSimulation : Simulation
         Global.currentSimulation = this;
         Global.cellSystem = new CellSystem();
 
-        ropes.Add(addRope(10, 50, new Vector2(Global.WIDTH / 2, 10)));
+        Particle obstacle = new Particle(25, new Vector2(Global.WIDTH / 2, Global.HEIGHT / 2 + 50), Vector2.Zero, particles);
+        obstacle.stationary = false;
+
+        new Rope(35, 25, new Vector2(600, 40), particles, ropes);
+        new Rope(35, 25, new Vector2(1200, 40), particles, ropes);
+
+
     }
 
     public override void Update(float deltaTime)
     {
+        Global.cellSystem.ClearCells();
+
         foreach (Particle particle in particles)
         {
             particle.Update(deltaTime);
@@ -34,30 +42,8 @@ public class RopeSimulation : Simulation
         {
             rope.ConstrainRope();
         }
-        
+
         Raylib.DrawText("Particles: " + Convert.ToString(particles.Count()), 10, 30, 25, Color.White);
-
-    }
-
-    public Rope addRope(int numPoints, int restLen, Vector2 startPos)
-    {
-        List<Particle> points = new List<Particle>();
-        Rope thisRope = new Rope();
-
-        for (int i = 0; i < numPoints; i++)
-        {
-            points.Add(new Particle(10, startPos, Vector2.Zero, particles));
-            startPos += new Vector2(restLen , 0 );
-        }
-
-        points[0].stationary = true;
-
-        for (int i = 1; i < numPoints; i++)
-        {
-            thisRope.Add(new RopePart(points[i - 1], points[i], restLen));
-        }
-
-        return thisRope;
 
     }
 }

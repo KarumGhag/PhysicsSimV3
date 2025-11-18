@@ -8,8 +8,28 @@ using GlobalInfo;
 public class Rope
 {
     List<RopePart> strings = new List<RopePart>();
+    List<Particle> points = new List<Particle>();
 
-    public void Add(RopePart rope)
+    public Rope(int numPoints, int restLen, Vector2 startPos, List<Particle> particles, List<Rope> ropes)
+    {
+        for (int i = 0; i < numPoints; i++)
+        {
+            points.Add(new Particle(10, startPos, Vector2.Zero, particles));
+            startPos += new Vector2(10, 0);
+        }
+
+        points[0].stationary = true;
+
+        for (int i = 1; i < numPoints; i++)
+        {
+            AddPart(new RopePart(points[i - 1], points[i], restLen));
+        }
+
+        ropes.Add(this);
+    }
+    
+
+    public void AddPart(RopePart rope)
     {
         strings.Add(rope);
     }
@@ -30,8 +50,6 @@ public class RopePart
     float restLen;
     Vector2 midPoint;
 
-    float angleToP1;
-    float distanceToP1;
 
     public RopePart(Particle p1, Particle p2, float rest)
     {
@@ -66,7 +84,6 @@ public class RopePart
     public void ConstrainPoints()
     {
         midPoint = (point1.position + point2.position) / 2;
-        distanceToP1 = Global.GetDistance(midPoint, point1.position);
 
         Vector2 desiredP1 = getCorrectedPoints()[0];
         Vector2 desiredP2 = getCorrectedPoints()[1];

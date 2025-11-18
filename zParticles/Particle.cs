@@ -31,13 +31,6 @@ public class Particle
         this.radius = radius;
 
         colour = Global.HsvToRgb(new Random().Next(0, 360), new Random().Next(0, 255));
-        int colourNumber = new Random().Next(0, 3);
-
-        if (colourNumber == 0) { colour = Color.Purple; }
-        if (colourNumber == 1) { colour = Color.Green; }
-        if (colourNumber == 2) { colour = Color.Orange; }
-
-         
 
         particles.Add(this);
 
