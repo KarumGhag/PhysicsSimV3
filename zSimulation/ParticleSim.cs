@@ -26,21 +26,20 @@ public class ParticleSim : Simulation
 
     public static List<Particle> particles = new List<Particle>();
 
-    public int framesBetweenAdding = 7;
+    public int framesBetweenAdding = 20;
     public int currentFrame;
     public override void Update(float deltaTime)
     {
         currentFrame++;
         if (currentFrame % framesBetweenAdding == 0)
         {
-            int radius = 15;
-            new Particle(radius, new Vector2(5, 5), new Vector2(7, 0), particles);
+            int radius = 10;
+            new Particle(radius, new Vector2(Global.WIDTH / 2, 5), new Vector2(0.5f, 0), particles);
         }
         Global.cellSystem.ClearCells();
         foreach (Particle particle in particles)
         {
-            particle.Update(deltaTime);
-            Raylib.DrawCircleV(particle.position, particle.radius, particle.colour);
+            particle.Update(deltaTime); Raylib.DrawCircleV(particle.position, particle.radius, particle.colour);
         }
 
         Raylib.DrawText("Particles: " + Convert.ToString(particles.Count()), 10, 30, 25, Color.White);

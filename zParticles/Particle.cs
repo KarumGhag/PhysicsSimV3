@@ -8,9 +8,9 @@ namespace ParticleClass;
 
 public class Particle
 {
-    public static float gravity = 1750f;
+    public static float gravity = 750f;
     public static float friction = 0.999f;
-    public static float bounceLoss = 0.999f;
+    public static float bounceLoss = 0.997f;
     public Vector2 position;
     public Vector2 oldPosition;
     public Vector2 velocity;
@@ -29,7 +29,13 @@ public class Particle
         this.radius = radius;
 
         colour = Global.HsvToRgb(new Random().Next(0, 360), new Random().Next(0, 255));
+        int colourNumber = new Random().Next(0, 3);
 
+        if (colourNumber == 0) { colour = Color.Purple; }
+        if (colourNumber == 1) { colour = Color.Green; }
+        if (colourNumber == 2) { colour = Color.Orange; }
+
+         
 
         particles.Add(this);
 
@@ -44,7 +50,7 @@ public class Particle
         position += velocity * friction;
         position.Y += gravity * deltaTime * deltaTime;
 
-        for (int i = 0;  i < 8; i++) collider.Collide(Global.cellSystem);
+        for (int i = 0; i < 8; i++) collider.Collide(Global.cellSystem);
 
         Bounce();
     }
@@ -65,10 +71,10 @@ public class Particle
 
 
         if (position.Y > Global.HEIGHT - radius)
-            {
-                position.Y = Global.HEIGHT - radius;
-                oldPosition.Y = (velocity.Y + position.Y) * bounceLoss;
-            }
+        {
+            position.Y = Global.HEIGHT - radius;
+            oldPosition.Y = (velocity.Y + position.Y) * bounceLoss;
+        }
 
         else if (position.Y < 0)
         {

@@ -1,7 +1,7 @@
 using Raylib_cs;
 using GlobalInfo;
 using SimulationClass;
-using ParticleSimulation; 
+using ParticleSimulation;
 
 namespace GameClass;
 
@@ -28,4 +28,4 @@ public class Game
 
         Raylib.CloseWindow();
     }
-}   
+}
