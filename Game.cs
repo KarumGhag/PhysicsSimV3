@@ -2,6 +2,7 @@ using Raylib_cs;
 using GlobalInfo;
 using SimulationClass;
 using ParticleSimulation;
+using RopeSim;
 
 namespace GameClass;
 
@@ -9,7 +10,7 @@ public class Game
 {
     public void Run()
     {
-        Simulation currentSim = new ParticleSim(this);
+        Simulation currentSim = new RopeSimulation(this);
         Raylib.InitWindow(Global.WIDTH, Global.HEIGHT, Global.GAME_NAME);
 
         Raylib.SetTargetFPS(120);

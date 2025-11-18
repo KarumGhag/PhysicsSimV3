@@ -18,6 +18,8 @@ public class Particle
     public int radius;
     public Color colour;
 
+    public bool stationary = false;
+
     public CircleCollider collider;
 
     public Particle(int radius, Vector2 startPos, Vector2 startVelocity, List<Particle> particles)
@@ -44,7 +46,8 @@ public class Particle
 
     public void Update(float deltaTime)
     {
-
+        if (stationary) return;
+        
         velocity = position - oldPosition;
         oldPosition = position;
         position += velocity * friction;
