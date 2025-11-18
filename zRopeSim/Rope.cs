@@ -4,7 +4,25 @@ using ParticleClass;
 using CollisionSystem;
 using System.Numerics;
 using GlobalInfo;
+
 public class Rope
+{
+    List<RopePart> strings = new List<RopePart>();
+
+    public void Add(RopePart rope)
+    {
+        strings.Add(rope);
+    }
+
+    public void ConstrainRope()
+    {
+        foreach (RopePart rope in  strings)
+        {
+            rope.ConstrainPoints();
+        }
+    }
+}
+public class RopePart
 {
     Particle point1;
     Particle point2;
@@ -15,7 +33,7 @@ public class Rope
     float angleToP1;
     float distanceToP1;
 
-    public Rope(Particle p1, Particle p2, float rest)
+    public RopePart(Particle p1, Particle p2, float rest)
     {
         point1 = p1;
         point2 = p2;
