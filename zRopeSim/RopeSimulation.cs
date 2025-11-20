@@ -29,7 +29,6 @@ public class RopeSimulation : Simulation
         obstacle.stationary = false;
 
         new Rope(35, 25, new Vector2(Global.WIDTH / 2, 20), particles, ropes);
-      //  new Rope(35, 25, new Vector2(1200, 40), particles, ropes);
 
         mouse = new Mouse(Global.cellSystem);
 

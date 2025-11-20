@@ -6,6 +6,7 @@ using GlobalInfo;
 using Raylib_cs;
 using ParticleClass;
 using System.Runtime.InteropServices;
+using System.Diagnostics.Tracing;
 
 public class Mouse
 {
@@ -16,6 +17,7 @@ public class Mouse
     private CellSystem cellSystem;
 
     private List<Particle> potentialCollisions = new List<Particle>();
+    private Particle selected;
 
     public Mouse(CellSystem cellSystem)
     {
@@ -36,9 +38,30 @@ public class Mouse
         {
             if (radius + otherParticle.radius > Vector2.Distance(mousePosition, otherParticle.position))
             {
-                if (Raylib.IsKeyDown(KeyboardKey.W)) otherParticle.isGrabbed = !otherParticle.isGrabbed;
+                if (Raylib.IsKeyDown(KeyboardKey.W) && selected == null)
+                { 
+                    Raylib.DrawText("Down", 10, 90, 25, Color.White);
+                    selected = otherParticle;
+                }    
             }
             
+        }
+
+        if (selected != null)
+        {
+            selected.position = mousePosition;
+            selected.oldPosition = mousePosition;
+
+            if (Raylib.IsKeyDown(KeyboardKey.S))
+            {
+                selected.stationary = true;
+            }
+
+        }
+
+        if (Raylib.IsKeyUp(KeyboardKey.W))
+        {
+            selected = null;
         }
     }
 }
