@@ -15,7 +15,7 @@ public class Particle
     public Vector2 position;
     public Vector2 oldPosition;
     public Vector2 velocity;
-    public int mass = 1;
+    public float mass = 1;
     public int radius;
     public Color colour;
 

@@ -31,20 +31,17 @@ public class Mouse
 
         potentialCollisions = cellSystem.GetNeighbourCollisions(gridX, gridY);
 
-        Raylib.DrawText("mousePos: " + Convert.ToString(gridX) + " " + Convert.ToString(gridY), 10, 50, 25, Color.White);
-
+        bool selectedLastFrame = false;
 
         foreach (Particle otherParticle in potentialCollisions)
         {
-            if (radius + otherParticle.radius > Vector2.Distance(mousePosition, otherParticle.position))
-            {
-                if (Raylib.IsKeyDown(KeyboardKey.W) && selected == null)
-                { 
-                    Raylib.DrawText("Down", 10, 90, 25, Color.White);
-                    selected = otherParticle;
-                }    
-            }
+            if (!(radius + otherParticle.radius > Vector2.Distance(mousePosition, otherParticle.position))) continue;
             
+            if (Raylib.IsKeyReleased(KeyboardKey.W) && selected == null)
+            { 
+                selected = otherParticle;
+                selectedLastFrame = true;
+            }    
         }
 
         if (selected != null)
@@ -52,16 +49,17 @@ public class Mouse
             selected.position = mousePosition;
             selected.oldPosition = mousePosition;
 
-            if (Raylib.IsKeyDown(KeyboardKey.S))
-            {
-                selected.stationary = true;
-            }
+            Raylib.DrawText("Particle info: ", 10, 55, 25, Color.White);
+            Raylib.DrawText("Mass: " + Convert.ToString(selected.mass), 17, 85, 25, Color.White);
+            Raylib.DrawText("Stationary: " + Convert.ToString(selected.stationary), 17, 115, 25, Color.White);
+
+
+            if (Raylib.IsKeyReleased(KeyboardKey.S)) selected.stationary = !selected.stationary; 
+            if (Raylib.IsKeyDown(KeyboardKey.P)) selected.mass += 0.1f;
+            if (Raylib.IsKeyDown(KeyboardKey.O)) selected.mass -= 0.1f;
 
         }
 
-        if (Raylib.IsKeyUp(KeyboardKey.W))
-        {
-            selected = null;
-        }
+        if (Raylib.IsKeyReleased(KeyboardKey.W) && selected != null && !selectedLastFrame) selected = null; 
     }
 }

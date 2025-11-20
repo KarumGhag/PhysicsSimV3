@@ -15,7 +15,7 @@ public class Rope
     {
         for (int i = 0; i < numPoints; i++)
         {
-            points.Add(new Particle(10, startPos, Vector2.Zero, particles));
+            points.Add(new Particle(7, startPos, Vector2.Zero, particles));
             points[i].myRope = this;
             startPos += new Vector2(15, 0);
         }
