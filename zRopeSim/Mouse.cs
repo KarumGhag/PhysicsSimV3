@@ -13,11 +13,11 @@ public class Mouse
     public Vector2 mousePosition;
     public int gridX;
     public int gridY;
-    public int radius = 10;
+    public int radius = 15;
     private CellSystem cellSystem;
 
     private List<Particle> potentialCollisions = new List<Particle>();
-    private Particle selected;
+    private Particle? selected;
 
     public Mouse(CellSystem cellSystem)
     {

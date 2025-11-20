@@ -16,4 +16,14 @@ public class Simulation
     {
 
     }
+
+    public virtual void Init()
+    {
+
+    }
+
+    public virtual void Reset()
+    {
+
+    }
 }

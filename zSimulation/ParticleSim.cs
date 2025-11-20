@@ -14,32 +14,39 @@ namespace ParticleSimulation;
 
 public class ParticleSim : Simulation
 {
+    public List<Particle> particles = new List<Particle>();
+    
     public ParticleSim(Game game) : base(game)
     {
-        Global.currentSimulation = this;
-        Global.cellSystem = new CellSystem();
-
-        int numParticles = 0;
-        for (int i = 0; i < numParticles; i++) new Particle(10, Global.RandomVec(0, Global.WIDTH, 0, Global.HEIGHT), Global.RandomVec(-10, 10, -10, 10), particles);
-
     }
 
-    public static List<Particle> particles = new List<Particle>();
+    public override void Init()
+    {
+        int numParticles = 0;
+        for (int i = 0; i < numParticles; i++) new Particle(10, Global.RandomVec(0, Global.WIDTH, 0, Global.HEIGHT), Global.RandomVec(-10, 10, -10, 10), particles);
+    }
 
-    public int framesBetweenAdding = 1;
+    public override void Reset()
+    {
+        particles = new List<Particle>();
+        Init();
+    }
+
+    public int framesBetweenAdding = 5;
     public int currentFrame;
     public override void Update(float deltaTime)
     {
         currentFrame++;
         if (currentFrame % framesBetweenAdding == 0)
         {
-            int radius = 10;
-            new Particle(radius, new Vector2(Global.WIDTH / 2, 5), new Vector2(0.5f, 0), particles);
+            int radius = 25;
+            new Particle(radius, new Vector2(5, 5), new Vector2(7, 0), particles);
         }
         Global.cellSystem.ClearCells();
         foreach (Particle particle in particles)
         {
-            particle.Update(deltaTime); Raylib.DrawCircleV(particle.position, particle.radius, particle.colour);
+            particle.Update(deltaTime);
+            Raylib.DrawCircleV(particle.position, particle.radius, particle.colour);
         }
 
         Raylib.DrawText("Particles: " + Convert.ToString(particles.Count()), 10, 30, 25, Color.White);

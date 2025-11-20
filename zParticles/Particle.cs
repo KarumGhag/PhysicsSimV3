@@ -25,7 +25,7 @@ public class Particle
 
     public CircleCollider collider;
 
-    public Rope myRope;
+    public Rope? myRope;
 
     public Particle(int radius, Vector2 startPos, Vector2 startVelocity, List<Particle> particles)
     {

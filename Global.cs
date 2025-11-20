@@ -2,6 +2,7 @@ using System.Numerics;
 using Raylib_cs;
 using SimulationClass;
 using CollisionSystem;
+using MouseSys;
 
 namespace GlobalInfo;
 
@@ -12,10 +13,10 @@ public static class Global
     public static int HEIGHT = 1080;
     public static string GAME_NAME = "Game";
     public static Color BACKGROUND_COL = Color.Black;
-    public static Simulation currentSimulation;
+    public static Simulation? currentSimulation;
     public static CellSystem cellSystem = new CellSystem();
 
-
+    public static Mouse? mouse;
 
 
     public static Vector2 RandomVec(int minX, int maxX, int minY, int maxY)
