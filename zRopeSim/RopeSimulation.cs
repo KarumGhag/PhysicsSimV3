@@ -16,6 +16,10 @@ public class RopeSim : Simulation
     public  List<Rope> ropes = new List<Rope>();
     public  List<Particle> obstacles = new List<Particle>();
 
+    public int cellSize = 40;
+    public int gravity = 750;
+
+
     public RopeSim(Game game) : base(game)
     {
     }
@@ -25,7 +29,7 @@ public class RopeSim : Simulation
         obstacles.Add(new Particle(25, new Vector2(Global.WIDTH / 2, Global.HEIGHT / 2 + 50), Vector2.Zero, particles));
         obstacles[0].mass = 20;
 
-        new Rope(50, 10, new Vector2(Global.WIDTH / 2, 20), particles, ropes);
+        new Rope(50, 15, new Vector2(Global.WIDTH / 2, 20), particles, ropes);
 
     }
 
@@ -42,6 +46,9 @@ public class RopeSim : Simulation
 
     public override void Update(float deltaTime)
     {
+        Global.gravity = gravity;
+        CellSystem.cellSize = cellSize;
+
         Global.cellSystem.ClearCells();
 
         foreach (Particle particle in particles)
@@ -59,7 +66,7 @@ public class RopeSim : Simulation
 
         if (Raylib.IsKeyReleased(KeyboardKey.A) && Global.mouse != null)
         {
-            obstacles.Add(new Particle(25, Global.mouse.mousePosition, Vector2.Zero, particles));
+            obstacles.Add(new Particle(20, Global.mouse.mousePosition, Vector2.Zero, particles));
             obstacles[obstacles.Count - 1].mass = 20;
         }
 

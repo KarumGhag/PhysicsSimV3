@@ -1,6 +1,7 @@
 using GlobalInfo;
 using GameClass;
 using ParticleClass;
+using CollisionSystem;
 
 namespace SimulationClass;
 
@@ -14,7 +15,6 @@ public class Simulation
 
     public virtual void Update(float deltaTime)
     {
-
     }
 
     public virtual void Init()

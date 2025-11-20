@@ -15,7 +15,8 @@ namespace ParticleSimulation;
 public class ParticleSim : Simulation
 {
     public List<Particle> particles = new List<Particle>();
-    
+    public int cellSize = 10;
+    public int gravity = 10;
     public ParticleSim(Game game) : base(game)
     {
     }
@@ -36,10 +37,16 @@ public class ParticleSim : Simulation
     public int currentFrame;
     public override void Update(float deltaTime)
     {
+
+        Global.gravity = gravity;
+        CellSystem.cellSize = cellSize;
+
+        if (Global.currentSimulation == this) Global.gravity = 10;
+
         currentFrame++;
         if (currentFrame % framesBetweenAdding == 0)
         {
-            int radius = 25;
+            int radius = 10;
             new Particle(radius, new Vector2(5, 5), new Vector2(7, 0), particles);
         }
         Global.cellSystem.ClearCells();

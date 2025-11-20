@@ -89,7 +89,7 @@ public class CircleCollider
 
 public class CellSystem
 {
-    public static int cellSize = 50;
+    public static int cellSize = 10;
     public static int cols = (int)Math.Ceiling((float)Global.WIDTH / cellSize);
     public static int rows = (int)Math.Ceiling((float)Global.HEIGHT / cellSize);
 

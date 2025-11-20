@@ -49,7 +49,7 @@ public class Particle
             velocity = position - oldPosition;
             oldPosition = position;
             position += velocity * friction;
-            position.Y += gravity * deltaTime * deltaTime;
+            position.Y += Global.gravity * deltaTime * deltaTime;
         }
 
         for (int i = 0; i < 8; i++) collider.Collide(Global.cellSystem);

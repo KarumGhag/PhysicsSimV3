@@ -18,6 +18,7 @@ public static class Global
 
     public static Mouse? mouse;
 
+    public static int gravity = 750;
 
     public static Vector2 RandomVec(int minX, int maxX, int minY, int maxY)
     {

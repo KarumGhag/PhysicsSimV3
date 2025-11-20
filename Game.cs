@@ -38,6 +38,7 @@ public class Game
                 simInt++;
                 simInt %= simulations.Count;
                 currentSim = simulations[simInt];
+                Global.currentSimulation = currentSim;
             }
 
             Raylib.BeginDrawing();
