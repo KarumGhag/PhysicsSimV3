@@ -45,7 +45,7 @@ public class Game
 
             if (currentSim != null) currentSim.Update(Raylib.GetFrameTime());
 
-            if (Raylib.IsKeyReleased(KeyboardKey.Space)) currentSim.Reset();
+            if (Raylib.IsKeyReleased(KeyboardKey.Space)) currentSim?.Reset();
 
             Raylib.DrawText("FPS: " + Convert.ToString(Math.Round(1 / Raylib.GetFrameTime(), 0)), 10, 10, 25, Color.White);
 
