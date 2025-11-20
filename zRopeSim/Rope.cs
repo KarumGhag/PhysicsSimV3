@@ -4,6 +4,7 @@ using ParticleClass;
 using CollisionSystem;
 using System.Numerics;
 using GlobalInfo;
+using Raylib_cs;
 
 public class Rope
 {
@@ -15,7 +16,7 @@ public class Rope
         for (int i = 0; i < numPoints; i++)
         {
             points.Add(new Particle(10, startPos, Vector2.Zero, particles));
-            startPos += new Vector2(10, 0);
+            startPos += new Vector2(15, 0);
         }
 
         points[0].stationary = true;
@@ -36,9 +37,17 @@ public class Rope
 
     public void ConstrainRope()
     {
-        foreach (RopePart rope in  strings)
+        foreach (RopePart rope in strings)
         {
             rope.ConstrainPoints();
+        }
+    }
+    
+    public void DrawLines()
+    {
+        for (int i = 1; i < points.Count; i++)
+        {
+            Raylib.DrawLineEx(points[i - 1].position, points[i].position, 2, Color.White);
         }
     }
 }

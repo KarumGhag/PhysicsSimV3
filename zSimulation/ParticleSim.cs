@@ -26,7 +26,7 @@ public class ParticleSim : Simulation
 
     public static List<Particle> particles = new List<Particle>();
 
-    public int framesBetweenAdding = 20;
+    public int framesBetweenAdding = 1;
     public int currentFrame;
     public override void Update(float deltaTime)
     {

@@ -20,6 +20,8 @@ public class Particle
 
     public bool stationary = false;
 
+    public bool isGrabbed = false;
+
     public CircleCollider collider;
 
     public Particle(int radius, Vector2 startPos, Vector2 startVelocity, List<Particle> particles)
@@ -39,7 +41,8 @@ public class Particle
 
     public void Update(float deltaTime)
     {
-        if (stationary) return;
+        if (isGrabbed) { position = Raylib.GetMousePosition(); oldPosition = position; }
+        if (stationary || isGrabbed) return;
         
         velocity = position - oldPosition;
         oldPosition = position;
