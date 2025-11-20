@@ -27,6 +27,7 @@ public class RopeSimulation : Simulation
 
         obstacle = new Particle(25, new Vector2(Global.WIDTH / 2, Global.HEIGHT / 2 + 50), Vector2.Zero, particles);
         obstacle.stationary = false;
+        obstacle.mass = 20;
 
         new Rope(35, 25, new Vector2(Global.WIDTH / 2, 20), particles, ropes);
 

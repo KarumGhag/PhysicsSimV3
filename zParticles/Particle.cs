@@ -25,7 +25,6 @@ public class Particle
 
     public CircleCollider collider;
 
-
     public Rope myRope;
 
     public Particle(int radius, Vector2 startPos, Vector2 startVelocity, List<Particle> particles)
@@ -52,8 +51,8 @@ public class Particle
             position += velocity * friction;
             position.Y += gravity * deltaTime * deltaTime;
         }
-        for (int i = 0; i < 8; i++) collider.Collide(Global.cellSystem);
 
+        for (int i = 0; i < 8; i++) collider.Collide(Global.cellSystem);
         Bounce();
     }
 

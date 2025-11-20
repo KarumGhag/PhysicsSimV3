@@ -47,11 +47,38 @@ public class CircleCollider
 
                     float bounceLoss = 0.1f;
 
-                    particle.position.X -= overlap * (particle.position.X - otherParticle.position.X) / distance * bounceLoss;
-                    particle.position.Y -= overlap * (particle.position.Y - otherParticle.position.Y) / distance * bounceLoss;
 
-                    otherParticle.position.X += overlap * (particle.position.X - otherParticle.position.X) / distance * bounceLoss;
-                    otherParticle.position.Y += overlap * (particle.position.Y - otherParticle.position.Y) / distance * bounceLoss;
+                    float overallXMovement = overlap * (particle.position.X - otherParticle.position.X) / distance * bounceLoss * 2;
+                    float overallYMovement = overlap * (particle.position.Y - otherParticle.position.Y) / distance * bounceLoss * 2;
+
+                    float p1Mass = particle.mass;
+                    float p2Mass = otherParticle.mass;
+                    float totalMass = p1Mass + p2Mass;
+
+
+                    float p1Percent = (p1Mass / (totalMass)) * 100;
+                    float p2Percent = (p2Mass / (totalMass)) * 100;
+
+                    float p1MoveX = overallXMovement * (100 - p1Percent);
+                    float p2MoveX = overallXMovement * (100 - p2Percent);
+
+                    float p1MoveY = overallYMovement * (100 - p1Percent);
+                    float p2MoveY = overallYMovement * (100 - p2Percent);
+
+                    if (p1Mass == p2Mass) { p1MoveX = 1; p1MoveY = 1; p2MoveX = 1; p2MoveY = 1; }
+
+                    p1MoveX = Math.Abs(p1MoveX) / 100;
+                    p1MoveY = Math.Abs(p1MoveY) / 100;
+
+                    p2MoveX = Math.Abs(p2MoveX) / 100;
+                    p2MoveY = Math.Abs(p2MoveY) / 100;
+
+                    particle.position.X -= overlap * (particle.position.X - otherParticle.position.X) / distance * bounceLoss * p1MoveX;
+                    particle.position.Y -= overlap * (particle.position.Y - otherParticle.position.Y) / distance * bounceLoss * p1MoveY;
+
+
+                    otherParticle.position.X += overlap * (particle.position.X - otherParticle.position.X) / distance * bounceLoss * p2MoveX;
+                    otherParticle.position.Y += overlap * (particle.position.Y - otherParticle.position.Y) / distance * bounceLoss * p2MoveY;
 
                 }
             }
