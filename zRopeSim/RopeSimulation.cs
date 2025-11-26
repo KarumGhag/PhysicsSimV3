@@ -70,6 +70,13 @@ public class RopeSim : Simulation
             obstacles[obstacles.Count - 1].mass = 20;
         }
 
+        if (Raylib.IsKeyReleased(KeyboardKey.D) && Global.mouse != null)
+        {
+            obstacles.Add(new Particle(20, Global.mouse.mousePosition, Vector2.Zero, particles));
+            obstacles[obstacles.Count - 1].mass = 20;
+            obstacles[obstacles.Count - 1].stationary = true;
+        }
+
         Global.mouse?.Update(Raylib.GetFrameTime());
 
 

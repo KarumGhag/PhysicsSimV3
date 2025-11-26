@@ -40,6 +40,7 @@ public class ParticleSim : Simulation
 
         Global.gravity = gravity;
         CellSystem.cellSize = cellSize;
+        Global.mouse.Update(deltaTime);
 
         if (Global.currentSimulation == this) Global.gravity = 10;
 

@@ -55,8 +55,8 @@ public class Mouse
 
 
             if (Raylib.IsKeyReleased(KeyboardKey.S)) selected.stationary = !selected.stationary; 
-            if (Raylib.IsKeyDown(KeyboardKey.P)) selected.mass += 0.1f;
-            if (Raylib.IsKeyDown(KeyboardKey.O)) selected.mass -= 0.1f;
+            if (Raylib.IsKeyDown(KeyboardKey.P)) selected.mass += 1f;
+            if (Raylib.IsKeyDown(KeyboardKey.O)) selected.mass -= 1f;
 
         }
 

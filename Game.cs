@@ -4,8 +4,9 @@ using SimulationClass;
 using ParticleSimulation;
 using RopeSimultaion;
 using CollisionSystem;
-using RopeClass;
 using MouseSys;
+using PlinkoSimulation;
+using System.Diagnostics.SymbolStore;
 
 namespace GameClass;
 
@@ -21,12 +22,15 @@ public class Game
 
         RopeSim ropeSim = new RopeSim(this);
         ParticleSim particleSim = new ParticleSim(this);
-        List<Simulation> simulations = new List<Simulation>{ ropeSim, particleSim };
+        PlinkoSim plinkoSim = new PlinkoSim(this);
+
+        List<Simulation> simulations = new List<Simulation>{ ropeSim, particleSim, plinkoSim };
         int simInt = 0;
         Simulation currentSim = simulations[simInt];
 
         ropeSim.Init();
         particleSim.Init();
+        plinkoSim.Init();
 
         Global.currentSimulation = currentSim;
 
@@ -39,6 +43,14 @@ public class Game
                 simInt %= simulations.Count;
                 currentSim = simulations[simInt];
                 Global.currentSimulation = currentSim;
+            }
+
+            if (Raylib.IsKeyReleased(KeyboardKey.Left))
+            {
+                simInt --;
+                if (simInt < 0) simInt = simulations.Count - 1;
+                currentSim = simulations[simInt];
+                Global.currentSimulation = currentSim; 
             }
 
             Raylib.BeginDrawing();
