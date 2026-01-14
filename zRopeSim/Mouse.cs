@@ -7,6 +7,7 @@ using Raylib_cs;
 using ParticleClass;
 using System.Runtime.InteropServices;
 using System.Diagnostics.Tracing;
+using RopeClass;
 
 public class Mouse
 {
@@ -36,12 +37,12 @@ public class Mouse
         foreach (Particle otherParticle in potentialCollisions)
         {
             if (!(radius + otherParticle.radius > Vector2.Distance(mousePosition, otherParticle.position))) continue;
-            
+
             if (Raylib.IsKeyReleased(KeyboardKey.W) && selected == null)
-            { 
+            {
                 selected = otherParticle;
                 selectedLastFrame = true;
-            }    
+            }
         }
 
         if (selected != null)
@@ -49,17 +50,16 @@ public class Mouse
             selected.position = mousePosition;
             selected.oldPosition = mousePosition;
 
-            Raylib.DrawText("Particle info: ", 10, 55, 25, Color.White);
-            Raylib.DrawText("Mass: " + Convert.ToString(selected.mass), 17, 85, 25, Color.White);
-            Raylib.DrawText("Stationary: " + Convert.ToString(selected.stationary), 17, 115, 25, Color.White);
+            Raylib.DrawText("Particle info: ", 10, 95, 25, Color.White);
+            Raylib.DrawText("Mass: " + Convert.ToString(selected.mass), 17, 125, 25, Color.White);
+            Raylib.DrawText("Stationary: " + Convert.ToString(selected.stationary), 17, 155, 25, Color.White);
 
 
-            if (Raylib.IsKeyReleased(KeyboardKey.S)) selected.stationary = !selected.stationary; 
+            if (Raylib.IsKeyReleased(KeyboardKey.S)) selected.stationary = !selected.stationary;
             if (Raylib.IsKeyDown(KeyboardKey.P)) selected.mass += 1f;
             if (Raylib.IsKeyDown(KeyboardKey.O)) selected.mass -= 1f;
-
         }
 
-        if (Raylib.IsKeyReleased(KeyboardKey.W) && selected != null && !selectedLastFrame) selected = null; 
+        if (Raylib.IsKeyReleased(KeyboardKey.W) && selected != null && !selectedLastFrame) selected = null;
     }
 }

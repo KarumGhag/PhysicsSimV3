@@ -11,11 +11,11 @@ public class Rope
     List<RopePart> strings = new List<RopePart>();
     List<Particle> points = new List<Particle>();
 
-    public Rope(int numPoints, int restLen, Vector2 startPos, List<Particle> particles, List<Rope> ropes)
+    public Rope(int numPoints, int restLen, Vector2 startPos, List<Particle> particles, List<Rope> ropes, int radius)
     {
         for (int i = 0; i < numPoints; i++)
         {
-            points.Add(new Particle(7, startPos, Vector2.Zero, particles));
+            points.Add(new Particle(radius, startPos, Vector2.Zero, particles));
             points[i].myRope = this;
             startPos += new Vector2(15, 0);
         }
@@ -29,7 +29,7 @@ public class Rope
 
         ropes.Add(this);
     }
-    
+
 
     public void AddPart(RopePart rope)
     {
@@ -43,23 +43,27 @@ public class Rope
             rope.ConstrainPoints();
         }
     }
-    
+
     public void DrawLines()
     {
-        for (int i = 1; i < points.Count; i++)
+        foreach (RopePart rope in strings)
         {
-            Raylib.DrawLineEx(points[i - 1].position, points[i].position, 2, Color.White);
+            if (rope.active)
+            {
+                Raylib.DrawLineEx(rope.point1.position, rope.point2.position, 2, Color.White);
+            }
         }
     }
 }
 public class RopePart
 {
-    Particle point1;
-    Particle point2;
+    public Particle point1;
+    public Particle point2;
 
     float restLen;
     Vector2 midPoint;
-
+    float tensionOnRope;
+    public bool active = true;
 
     public RopePart(Particle p1, Particle p2, float rest)
     {
@@ -93,6 +97,7 @@ public class RopePart
     }
     public void ConstrainPoints()
     {
+        if (!active) return;
         midPoint = (point1.position + point2.position) / 2;
 
         Vector2 desiredP1 = getCorrectedPoints()[0];
@@ -100,6 +105,10 @@ public class RopePart
 
         Vector2 p1Offset = desiredP1 - point1.position;
         Vector2 p2Offset = desiredP2 - point2.position;
+
+        tensionOnRope = p1Offset.Length();
+        Raylib.DrawText(Convert.ToString(tensionOnRope > restLen * 5), 25, 100, 25, Color.White);
+        if (tensionOnRope > restLen * 5) active = false;
 
         if (!point1.stationary) point1.position += p1Offset;
         if (!point2.stationary) point2.position += p2Offset;

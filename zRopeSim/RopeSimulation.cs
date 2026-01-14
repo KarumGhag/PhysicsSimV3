@@ -29,7 +29,7 @@ public class RopeSim : Simulation
         obstacles.Add(new Particle(25, new Vector2(Global.WIDTH / 2, Global.HEIGHT / 2 + 50), Vector2.Zero, particles));
         obstacles[0].mass = 20;
 
-        new Rope(50, 15, new Vector2(Global.WIDTH / 2, 20), particles, ropes);
+        new Rope(100, 15, new Vector2(Global.WIDTH / 2, 20), particles, ropes, 7);
 
     }
 
@@ -46,6 +46,7 @@ public class RopeSim : Simulation
 
     public override void Update(float deltaTime)
     {
+        CircleCollider.collisonChecks = 0;
         Global.gravity = gravity;
         CellSystem.cellSize = cellSize;
 
@@ -61,7 +62,7 @@ public class RopeSim : Simulation
         foreach (Rope rope in ropes)
         {
             rope.ConstrainRope();
-            rope.DrawLines(); 
+            rope.DrawLines();
         }
 
         if (Raylib.IsKeyReleased(KeyboardKey.A) && Global.mouse != null)
@@ -80,6 +81,7 @@ public class RopeSim : Simulation
         Global.mouse?.Update(Raylib.GetFrameTime());
 
 
+        Raylib.DrawText("Collision checks: " + Convert.ToString(CircleCollider.collisonChecks), 10, 55, 25, Color.White);
         Raylib.DrawText("Particles: " + Convert.ToString(particles.Count()), 10, 30, 25, Color.White);
 
     }

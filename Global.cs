@@ -8,7 +8,6 @@ namespace GlobalInfo;
 
 public static class Global
 {
-    // git on zed test
     public static int WIDTH = 1920;
     public static int HEIGHT = 1080;
     public static string GAME_NAME = "Game";
@@ -37,16 +36,16 @@ public static class Global
 
     public static Color HsvToRgb(float hue, float saturation)
     {
-        // Normalize hue into [0,360)
+        // Normalise hue into (0,360)
         hue = hue % 360;
         if (hue < 0) hue += 360;
 
         // Always full brightness
-        float value = 1.0f;
+        float value = 1f;
 
         if (saturation <= 0.0f)
         {
-            // Achromatic (white, since value=1)
+            // White, since value = 1
             return new Color(255, 255, 255, 255);
         }
 

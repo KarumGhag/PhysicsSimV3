@@ -37,6 +37,7 @@ public class ParticleSim : Simulation
     public int currentFrame;
     public override void Update(float deltaTime)
     {
+        CircleCollider.collisonChecks = 0;
 
         Global.gravity = gravity;
         CellSystem.cellSize = cellSize;
@@ -57,6 +58,7 @@ public class ParticleSim : Simulation
             Raylib.DrawCircleV(particle.position, particle.radius, particle.colour);
         }
 
+        Raylib.DrawText("Collision checks: " + Convert.ToString(CircleCollider.collisonChecks), 10, 55, 25, Color.White);
         Raylib.DrawText("Particles: " + Convert.ToString(particles.Count()), 10, 30, 25, Color.White);
     }
 }

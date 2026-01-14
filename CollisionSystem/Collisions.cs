@@ -14,6 +14,8 @@ public class CircleCollider
     int gridX;
     int gridY;
 
+    public static int collisonChecks;
+
     List<Particle> potentialCollisions = new List<Particle>();
     public CircleCollider(Particle particle)
     {
@@ -35,10 +37,21 @@ public class CircleCollider
             cellSystem.grid[gridX, gridY].isEmpty = false;
 
             potentialCollisions = cellSystem.GetNeighbourCollisions(gridX, gridY);
+            float smallestDistance = 0;
+
+            foreach (Particle otherParticle in potentialCollisions)
+            {
+                if (Global.GetDistance(particle.position, otherParticle.position) < smallestDistance)
+                {
+                    smallestDistance = Global.GetDistance(particle.position, otherParticle.position);
+                    particle.closestParticle = otherParticle;
+                }
+            }
 
             foreach (Particle otherParticle in potentialCollisions)
             {
                 if (otherParticle == particle) continue;
+                collisonChecks++;
                 if (particle.radius + otherParticle.radius > Vector2.Distance(position, otherParticle.position))
                 {
 

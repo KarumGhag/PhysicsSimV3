@@ -27,6 +27,8 @@ public class Particle
 
     public Rope? myRope;
 
+    public Particle? closestParticle;
+
     public Particle(int radius, Vector2 startPos, Vector2 startVelocity, List<Particle> particles)
     {
         position = startPos;
@@ -54,6 +56,7 @@ public class Particle
 
         for (int i = 0; i < 8; i++) collider.Collide(Global.cellSystem);
         Bounce();
+
     }
 
     public void Bounce()
